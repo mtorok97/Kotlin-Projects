@@ -1,12 +1,9 @@
 package javafx.example.viewelements
 
-import javafx.example.UFO
 import javafx.scene.canvas.Canvas
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
-import javafx.scene.text.FontWeight
 
-class MyButton (private val label: String, x: Double, y: Double, canvas: Canvas) : MyText(label, x, y, canvas) {
+class MyButton (private val label: String, style: Styles, x: Double, y: Double, canvas: Canvas) : MyText(label, style, x, y, canvas) {
 
     init{
         context.fill = Color.color(205.0/255,183.0/255,183.0/255,0.3)

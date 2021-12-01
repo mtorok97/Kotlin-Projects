@@ -3,20 +3,17 @@ package javafx.example
 import javafx.application.Application
 import javafx.example.viewelements.MyButton
 import javafx.example.viewelements.MyText
+import javafx.example.viewelements.Styles
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.image.Image
 import javafx.scene.layout.VBox
-import javafx.scene.paint.Color
-import javafx.scene.text.Font
-import javafx.scene.text.FontWeight
 import javafx.stage.Stage
+import kotlin.system.exitProcess
 
 
 class StartPage : Application() {
-    //var buttonLambdaList = mutableListOf<() -> Unit>() //lambdákat tartalmazó lista
-    //var buttonList = mutableListOf<MyButton>() //lambdákat tartalmazó lista
 
     override fun start(primaryStage: Stage) {
         primaryStage.title = "Aim trainer"
@@ -29,35 +26,29 @@ class StartPage : Application() {
 
         val gc: GraphicsContext = canvas.graphicsContext2D
 
-        val aimTrainerLabel = MyText("Aim Trainer", CANVAS_WIDTH / 2 - 115, CANVAS_HEIGHT / 2 - 200, canvas)
-        val startGameLabel = MyButton("Start Game", CANVAS_WIDTH / 2 - 115, CANVAS_HEIGHT / 2 - 100, canvas)
-
-//        var startGameLambda = {
-//            val x = 5
-//            AimTrainerApplication().start(primaryStage)
-//            println("hiiiiiiiiiiiiiiiiiiiiiiiii")
-//        }
-//
-//        buttonList.add(startGameLabel)
-//        buttonLambdaList.add(startGameLambda)
-
-        //buttonList.add(startGameLabel)
+        val aimTrainerLabel = MyText("Aim Trainer", Styles.AppStyle,CANVAS_WIDTH / 2 - 115, CANVAS_HEIGHT / 2 - 200, canvas)
+        val startGameLabel = MyButton("Start Game", Styles.AppStyle,CANVAS_WIDTH / 2 - 115, CANVAS_HEIGHT / 2 - 100, canvas)
         startGameLabel.onClick {
             AimTrainerApplication().start(primaryStage)
-            println("hiiiiiiiiiiiiiiiiiiiiiiiii")
         }
-        val scoresLabel = MyButton("Scores", CANVAS_WIDTH / 2 - 70, CANVAS_HEIGHT / 2, canvas)
-//        buttonList.add(scoresLabel)
-//        for(e in buttonList){
-//            println(e.x)
+
+        primaryStage.scene.setOnKeyPressed {
+            println("${it.code}")
+            if (it.code.toString() == "ENTER"){
+                AimTrainerApplication().start(primaryStage)
+            }
+            else if (it.code.toString() == "ESCAPE"){
+                exitProcess(1)
+            }
+        }
+//        val scoresLabel = MyButton("Scores", 48.0,CANVAS_WIDTH / 2 - 70, CANVAS_HEIGHT / 2, canvas)
+//        scoresLabel.onClick{
+//            AimTrainerApplication().start(primaryStage)
 //        }
-        scoresLabel.onClick{
-            AimTrainerApplication().start(primaryStage)
-            println("yooooooooooooooooo")
-        }
 
-        gc.drawImage(bullseye, CANVAS_WIDTH / 2 - 25, CANVAS_HEIGHT / 2 + 100)
-
+        gc.drawImage(bullseye, CANVAS_WIDTH / 2 - 25, CANVAS_HEIGHT / 2)
+        val pressEnter = MyText("Click to Start Game or press Enter to Start",  Styles.SmallLabel, CANVAS_WIDTH / 2 - 180, CANVAS_HEIGHT / 2 + 100, canvas)
+        val pressEscape = MyText("Press ESCAPE to exit",  Styles.SmallLabel, CANVAS_WIDTH / 2 - 90, CANVAS_HEIGHT / 2 + 150, canvas)
         primaryStage.show()
     }
 }
